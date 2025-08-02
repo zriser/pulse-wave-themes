@@ -1,73 +1,239 @@
-# Welcome to your Lovable project
+# PulseWave Tech Website
 
-## Project info
+Intelligence Delivered in Real Time - Advanced solutions in AI, cyber, and automation for defense and intelligence missions.
 
-**URL**: https://lovable.dev/projects/4a7c731c-ccaa-474a-87b5-88f14453ee69
+## 🚀 Features
 
-## How can I edit this code?
+- **Dark/Light Mode**: Automatic detection of system preference with manual toggle override
+- **Responsive Design**: Mobile-first approach with beautiful animations
+- **Waveform Aesthetics**: Tech-inspired design with electric blue, cyan, and teal color palette
+- **GitHub Pages Ready**: Configured for static deployment with custom domain support
+- **Performance Optimized**: Fast loading with code splitting and optimized assets
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use Lovable**
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite (fast development and production builds)
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: shadcn/ui components
+- **Icons**: Lucide React
+- **Theme**: next-themes for dark/light mode support
+- **Routing**: React Router for SPA navigation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4a7c731c-ccaa-474a-87b5-88f14453ee69) and start prompting.
+## 📋 Setup Instructions
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
+- Node.js 18+ and npm
+- Git
 
-**Use your preferred IDE**
+### Local Development
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
+cd pulsewave-tech
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Open http://localhost:8080 in your browser
 ```
 
-**Edit a file directly in GitHub**
+### Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Create production build
+npm run build
 
-**Use GitHub Codespaces**
+# Preview production build locally
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🌐 GitHub Pages Deployment
 
-## What technologies are used for this project?
+### Automatic Deployment (Recommended)
 
-This project is built with:
+1. **Enable GitHub Pages**:
+   - Go to your repository Settings → Pages
+   - Source: "GitHub Actions"
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. **Create deployment workflow** (`.github/workflows/deploy.yml`):
 
-## How can I deploy this project?
+```yaml
+name: Deploy to GitHub Pages
 
-Simply open [Lovable](https://lovable.dev/projects/4a7c731c-ccaa-474a-87b5-88f14453ee69) and click on Share -> Publish.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-## Can I connect a custom domain to my Lovable project?
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        cname: www.pulsewavetech.io
+```
 
-Yes, you can!
+### Manual Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+# Install gh-pages package
+npm install --save-dev gh-pages
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+# Add to package.json scripts:
+"deploy": "npm run build && gh-pages -d dist -f"
+
+# Deploy
+npm run deploy
+```
+
+## 🔗 Custom Domain Setup (GoDaddy)
+
+### 1. Configure DNS in GoDaddy
+
+Add these DNS records in your GoDaddy domain management:
+
+```
+Type: A
+Name: @
+Value: 185.199.108.153
+
+Type: A  
+Name: @
+Value: 185.199.109.153
+
+Type: A
+Name: @  
+Value: 185.199.110.153
+
+Type: A
+Name: @
+Value: 185.199.111.153
+
+Type: CNAME
+Name: www
+Value: <your-username>.github.io
+```
+
+### 2. GitHub Repository Settings
+
+- Go to Settings → Pages
+- Custom domain: `www.pulsewavetech.io`
+- Check "Enforce HTTPS"
+
+### 3. Verify CNAME File
+
+The `public/CNAME` file contains:
+```
+www.pulsewavetech.io
+```
+
+## 🎨 Design System
+
+### Color Palette
+- **Primary**: Electric Blue (#2563eb)
+- **Secondary**: Pulse Teal (#0891b2)  
+- **Accent**: Electric Cyan (#06b6d4)
+- **Background**: Light/Dark responsive
+- **Tech Elements**: Gradients and glowing effects
+
+### Theme Features
+- Automatic dark/light mode detection
+- Manual theme toggle (Sun/Moon/Monitor icons)
+- Persistent user preference in localStorage
+- Smooth transitions between themes
+
+## 📁 Project Structure
+
+```
+src/
+├── components/           # React components
+│   ├── ui/              # shadcn/ui components
+│   ├── theme-provider.tsx
+│   ├── theme-toggle.tsx
+│   ├── navigation.tsx
+│   ├── hero-section.tsx
+│   ├── mission-section.tsx
+│   ├── capabilities-section.tsx
+│   ├── differentiators-section.tsx
+│   ├── experience-section.tsx
+│   ├── contact-section.tsx
+│   └── footer.tsx
+├── assets/              # Images and static files
+├── pages/               # Page components
+├── lib/                 # Utilities
+├── hooks/               # Custom React hooks
+├── index.css           # Global styles & design system
+└── main.tsx            # App entry point
+
+public/
+├── CNAME               # Custom domain configuration
+└── robots.txt          # SEO configuration
+```
+
+## 🔧 Content Updates
+
+Content is organized in component files for easy updates:
+
+- **Company Info**: `src/components/hero-section.tsx`
+- **Mission Statement**: `src/components/mission-section.tsx`
+- **Capabilities**: `src/components/capabilities-section.tsx`
+- **Experience**: `src/components/experience-section.tsx`
+- **Contact**: `src/components/contact-section.tsx`
+
+## 📈 Performance Features
+
+- Code splitting with React.lazy()
+- Optimized images and assets
+- Minimal bundle size
+- Fast loading animations
+- Efficient CSS with Tailwind
+
+## 🔒 Security & Accessibility
+
+- WCAG AA compliant
+- Semantic HTML structure
+- Keyboard navigation support
+- Screen reader friendly
+- Focus management
+- Secure deployment practices
+
+## 📞 Contact & Support
+
+- **Email**: info@pulsewavetech.io
+- **Website**: www.pulsewavetech.io
+- **Response Time**: Within 24 hours
+
+## 📄 License
+
+© 2024 PulseWave Tech. All rights reserved.
+
+---
+
+**Deployment Status**: ✅ GitHub Pages Ready | 🌐 GoDaddy Domain Compatible | 🎨 Dark/Light Mode | ⚡ Optimized Performance
